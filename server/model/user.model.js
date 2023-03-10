@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
     permit: {
         type: String,
         require: [true, "Es obligatorio otorgar permiso al usuario"],
-        enum: ["uni", "guarda", "ad"]
+        enum: ["universitario", "guarda", "administrador"]
     }
 }, { timestamps: true });
 

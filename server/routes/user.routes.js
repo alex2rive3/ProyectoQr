@@ -6,8 +6,8 @@ module.exports = app => {
     app.post("/api/login", User.login);
     app.post("/api/generar", authenticate, User.generador);
     app.post("/api/guardar", authenticate, Qr.guardar);
-    app.get("/api/libre", User.getAll);
+    app.get("/api/users", User.getAll);
+    app.get("/api/getUser/:id", User.getUser);
     app.get("/api/salir", User.logout);
     app.post("/api/user", User.buscarEmail);
 }
-

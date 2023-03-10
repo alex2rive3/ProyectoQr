@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const QrSchema = new mongoose.Schema({
-    generadorId: {
-        type: String,
-        required: [true, "Id del usuario es requerido"]
-    },
     token: {
         type: String,
         required: [true, "El Token es requerido"]

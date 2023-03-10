@@ -53,12 +53,11 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.generador = async (req, res) => {
-    const { user, guarda } = req.body
+    const { guarda } = req.body
     try {
         const secret = "boletoDescuentoFram";
         const newTokenQR = jwt.sign({
             id: new Date(),
-            user: user,
             guarda: guarda
         }, secret)
         res.json(newTokenQR);
@@ -66,11 +65,14 @@ module.exports.generador = async (req, res) => {
         return res.json({ msg: "Ha ocurrido algun error " })
     }
 }
-
-
 module.exports.buscarEmail = async (req, res) => {
     //console.log(req.body)
     const { email } = req.body
     const result = await User.findOne({ email: email })
+    res.json(result)
+}
+module.exports.getUser = async (req, res) => {
+    const { id } = req.body
+    const result = await User.findOne({ _id: id })
     res.json(result)
 }

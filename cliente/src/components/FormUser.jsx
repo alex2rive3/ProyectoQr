@@ -1,11 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import axios from "axios";
-axios.defaults.withCredentials = true;
+import { MenuItem } from "@mui/material";
 const validationSchema = yup.object({
     email: yup
         .string("Enter your email")
@@ -17,48 +15,12 @@ const validationSchema = yup.object({
         .required("Password is required"),
 });
 
-const Login = () => {
-    const myStorage = window.localStorage;
-    const navigate = useNavigate();
-    const valorInicial = {
-        email: "",
-        password: "",
-    };
-
-    const handleLogin = async (values, action) => {
-        const { email } = values;
-        try {
-            const res = await axios.post(
-                "http://localhost:8000/api/login",
-                values
-            );
-            if (res.status === 200) {
-                const result = await axios.post(
-                    "http://localhost:8000/api/user",
-                    {
-                        email: email,
-                    }
-                );
-                myStorage.setItem("user", JSON.stringify(result.data));
-                const direccion = result.data.permit;
-                if (direccion === "uni") {
-                    navigate("generar");
-                } else if (direccion === "guarda") {
-                    navigate("scan");
-                } else {
-                    console.log("Administrador");
-                }
-            }
-            action.resetForm(valorInicial);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+const FormUser = ({ initialValues, botonTexto, onSubmit }) => {
     const formik = useFormik({
-        initialValues: valorInicial,
+        initialValues: initialValues,
         validationSchema: validationSchema,
         enableReinitialize: "true",
-        onSubmit: handleLogin,
+        onSubmit: onSubmit,
     });
     return (
         <div style={{ width: "40%", margin: "80px auto", height: "350px" }}>
@@ -70,6 +32,21 @@ const Login = () => {
                 }}
                 onSubmit={formik.handleSubmit}
             >
+                <TextField
+                    fullWidth
+                    id="userName"
+                    name="userName"
+                    label="User Name"
+                    value={formik.values.userName}
+                    onChange={formik.handleChange}
+                    error={
+                        formik.touched.userName &&
+                        Boolean(formik.errors.userName)
+                    }
+                    helperText={
+                        formik.touched.userName && formik.errors.userName
+                    }
+                />
                 <TextField
                     fullWidth
                     id="email"
@@ -96,17 +73,36 @@ const Login = () => {
                         formik.touched.password && formik.errors.password
                     }
                 />
+                <TextField
+                    fullWidth
+                    id="permit"
+                    name="permit"
+                    select
+                    label="Permiso"
+                    type="permit"
+                    value={formik.values.permit}
+                    onChange={formik.handleChange}
+                    error={
+                        formik.touched.permit && Boolean(formik.errors.permit)
+                    }
+                    helperText={formik.touched.permit && formik.errors.permit}
+                >
+                    <MenuItem value={"universitario"}> Universitario</MenuItem>
+                    <MenuItem value={"guarda"}>Guarda</MenuItem>
+                    <MenuItem value={"administrador"}> Administrador</MenuItem>
+                </TextField>
+
                 <Button
                     color="primary"
                     variant="contained"
                     fullWidth
                     type="submit"
                 >
-                    Iniciar Session
+                    {botonTexto}
                 </Button>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default FormUser;

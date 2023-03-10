@@ -45,7 +45,7 @@ const GereadorQR = () => {
                                 maxWidth: "100%",
                                 width: "100%",
                             }}
-                            value={"http://localhost:8000/api/generar"}
+                            value={`${user._id}`}
                             viewBox={`0 0 256 256`}
                         />
                         <p>Codigo correspondiente al dia {dia} </p>
