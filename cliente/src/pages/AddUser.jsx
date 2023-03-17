@@ -1,9 +1,10 @@
+import { Paper, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import Swal from "sweetalert2";
 import FormUser from "../components/FormUser";
 
-const AddUser = () => {
+const AddUser = ({ setAct }) => {
     const valorInicial = {
         userName: "",
         email: "",
@@ -21,9 +22,9 @@ const AddUser = () => {
                 Swal.fire({
                     icon: "success",
                     title: "GENIAL!!!",
-                    text: `Se ha agrego perfectamente el Usuario ${res.data.userName}!`,
+                    text: `Se ha agrego perfectamente el Usuario!`,
                 });
-
+                setAct(res.data.user.email);
                 actions.resetForm(valorInicial);
             }
         } catch (error) {
@@ -38,12 +39,19 @@ const AddUser = () => {
         }
     };
     return (
-        <FormUser
-            initialValues={valorInicial}
-            botonTexto="Agregar"
-            onSubmit={crearUsuario}
-        />
+        <Paper elevation={3} sx={{ minWidth: 350, padding: "10px 18px" }}>
+            <Typography
+                variant="h5"
+                sx={{ textAlign: "center", marginBottom: "8px" }}
+            >
+                Agreagar Usuario
+            </Typography>
+            <FormUser
+                initialValues={valorInicial}
+                botonTexto="Agregar"
+                onSubmit={crearUsuario}
+            />
+        </Paper>
     );
 };
-
 export default AddUser;

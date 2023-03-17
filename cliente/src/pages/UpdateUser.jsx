@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import FormUser from "../components/FormUser";
 
-const UpdateUser = () => {
+const UpdateUser = ({ id }) => {
     const navigate = useNavigate();
-
     const valorInicial = {
         userName: "",
         email: "",
@@ -14,15 +13,14 @@ const UpdateUser = () => {
         permit: "",
     };
 
-    const { id } = useParams();
-    const [autor, setAutor] = useState(valorInicial);
+    const [user, setUser] = useState(valorInicial);
 
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(
                 `http://localhost:8000/api/getUser/${id}`
             );
-            setAutor(res.data);
+            setUser(res.data);
         };
 
         getData();
@@ -31,7 +29,7 @@ const UpdateUser = () => {
     const actualizarUsuario = async (values, actions) => {
         try {
             const res = await axios.put(
-                `${process.env.REACT_APP_API_URL}/autores/${id}`,
+                `http://localhost:8000/api/user/${id}`,
                 values
             );
             console.log(res);
@@ -60,7 +58,7 @@ const UpdateUser = () => {
         <>
             <h1>Editar Usuario</h1>
             <FormUser
-                initialValues={autor}
+                initialValues={user}
                 botonTexto="Actualizar"
                 onSubmit={actualizarUsuario}
             />

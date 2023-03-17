@@ -3,9 +3,10 @@ import Layout from "../layouts/Layouts";
 import Login from "../components/Login";
 import GeneradorQR from "../components/GeneradorQR";
 import NotFound from "../pages/NotFound";
+import Scaner from "../components/Scaner";
 import Scan from "../components/Scan";
 import AddUser from "../pages/AddUser";
-import UserList from "../components/UserList";
+import Admin from "../pages/Admin";
 
 
 export default createBrowserRouter([
@@ -24,6 +25,10 @@ export default createBrowserRouter([
             },
             {
                 path: "scan",
+                element: <Scaner />,
+            },
+            {
+                path: "scaner",
                 element: <Scan />,
             },
             {
@@ -31,8 +36,8 @@ export default createBrowserRouter([
                 element: <AddUser />,
             },
             {
-                path: "usuario",
-                element: <UserList />,
+                path: "admin",
+                element: <Admin />,
             },
         ],
     },

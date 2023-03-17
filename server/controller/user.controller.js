@@ -2,7 +2,11 @@ const { User } = require("../model/user.model");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 module.exports.register = (req, res) => {
-    const user = new User(req.body);
+    const { userName, email, password, permit } = req.body
+    const confirmPassword = password
+    const user = new User({
+        userName, email, password, permit, confirmPassword
+    });
     user.save()
         .then(() => {
             res.json({ msg: "success!", user: user });
@@ -13,6 +17,15 @@ module.exports.register = (req, res) => {
 module.exports.getAll = async (req, res) => {
     const getAll = await User.find({})
     res.json(getAll)
+}
+module.exports.delete = async (req, res) => {
+    console.log(req.params.id)
+    try {
+        const user = await User.deleteOne({ _id: req.params.id })
+        res.json(user);
+    } catch (error) {
+        res.status(400).json(error);
+    }
 }
 module.exports.logout = (req, res) => {
     try {
@@ -66,7 +79,6 @@ module.exports.generador = async (req, res) => {
     }
 }
 module.exports.buscarEmail = async (req, res) => {
-    //console.log(req.body)
     const { email } = req.body
     const result = await User.findOne({ email: email })
     res.json(result)
@@ -75,4 +87,12 @@ module.exports.getUser = async (req, res) => {
     const { id } = req.body
     const result = await User.findOne({ _id: id })
     res.json(result)
+}
+module.exports.update = async (req, res) => {
+    try {
+        const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+        res.json(user);
+    } catch (error) {
+        res.status(400).json(error);
+    }
 }

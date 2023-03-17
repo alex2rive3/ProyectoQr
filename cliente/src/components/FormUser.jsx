@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { MenuItem } from "@mui/material";
+import { MenuItem, Box } from "@mui/material";
 const validationSchema = yup.object({
     email: yup
         .string("Enter your email")
@@ -23,20 +23,21 @@ const FormUser = ({ initialValues, botonTexto, onSubmit }) => {
         onSubmit: onSubmit,
     });
     return (
-        <div style={{ width: "40%", margin: "80px auto", height: "350px" }}>
+        <Box sx={{ width: "80%", padding: "10px", margin: "0 auto" }}>
             <form
                 style={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "14px",
+                    gap: "12px",
                 }}
                 onSubmit={formik.handleSubmit}
             >
                 <TextField
                     fullWidth
+                    autoComplete="off"
                     id="userName"
                     name="userName"
-                    label="User Name"
+                    label="Nombre de Usuario"
                     value={formik.values.userName}
                     onChange={formik.handleChange}
                     error={
@@ -50,8 +51,9 @@ const FormUser = ({ initialValues, botonTexto, onSubmit }) => {
                 <TextField
                     fullWidth
                     id="email"
+                    autoComplete="off"
                     name="email"
-                    label="Email"
+                    label="Correo"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
@@ -61,7 +63,8 @@ const FormUser = ({ initialValues, botonTexto, onSubmit }) => {
                     fullWidth
                     id="password"
                     name="password"
-                    label="Password"
+                    label="Contraseña"
+                    autoComplete="off"
                     type="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
@@ -76,6 +79,7 @@ const FormUser = ({ initialValues, botonTexto, onSubmit }) => {
                 <TextField
                     fullWidth
                     id="permit"
+                    autoComplete="off"
                     name="permit"
                     select
                     label="Permiso"
@@ -101,7 +105,7 @@ const FormUser = ({ initialValues, botonTexto, onSubmit }) => {
                     {botonTexto}
                 </Button>
             </form>
-        </div>
+        </Box>
     );
 };
 

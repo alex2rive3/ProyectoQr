@@ -8,8 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
+import { Button, Typography } from "@mui/material";
+import DeleteButton from "./DeleteButton";
 
-const UserList = () => {
+const UserList = ({ act }) => {
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: theme.palette.common.black,
@@ -29,7 +31,6 @@ const UserList = () => {
             border: 0,
         },
     }));
-
     const [user, setUser] = useState([]);
     useEffect(() => {
         const getData = async () => {
@@ -37,34 +38,59 @@ const UserList = () => {
             setUser(res.data);
         };
         getData();
-    }, []);
+    }, [act]);
+    const quitarUser = (userID) => {
+        setUser(user.filter((usuario) => usuario._id !== userID));
+    };
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Usuario</StyledTableCell>
-                        <StyledTableCell align="right">Correo</StyledTableCell>
-                        <StyledTableCell align="right">Permiso</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {user.map((row) => (
-                        <StyledTableRow key={row.userName}>
-                            <StyledTableCell component="th" scope="row">
-                                {row.userName}
+        <Paper sx={{ minWidth: 720, padding: "10px 18px" }}>
+            <Typography variant="h5">Lista de Usuarios</Typography>
+            <TableContainer
+                component={Paper}
+                sx={{ maxWidth: 720, maxHeight: "400px", overflowY: "scroll" }}
+            >
+                <Table sx={{ maxWidth: 720 }} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Usuario</StyledTableCell>
+                            <StyledTableCell align="right">
+                                Correo
                             </StyledTableCell>
                             <StyledTableCell align="right">
-                                {row.email}
+                                Permiso
                             </StyledTableCell>
-                            <StyledTableCell align="right">
-                                {row.permit}
+                            <StyledTableCell align="center">
+                                Funciones
                             </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {user.map((row) => (
+                            <StyledTableRow key={row.userName}>
+                                <StyledTableCell component="th" scope="row">
+                                    {row.userName}
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                    {row.email}
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                    {row.permit}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    <Button variant="contained" color="primary">
+                                        Editar
+                                    </Button>
+                                    <DeleteButton
+                                        id_user={row._id}
+                                        successCallback={quitarUser}
+                                    />
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper>
     );
 };
 

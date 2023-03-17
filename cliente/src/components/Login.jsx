@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
+import { Paper, Typography } from "@mui/material";
 axios.defaults.withCredentials = true;
 const validationSchema = yup.object({
     email: yup
@@ -41,12 +42,12 @@ const Login = () => {
                 );
                 myStorage.setItem("user", JSON.stringify(result.data));
                 const direccion = result.data.permit;
-                if (direccion === "uni") {
+                if (direccion === "universitario") {
                     navigate("generar");
                 } else if (direccion === "guarda") {
                     navigate("scan");
                 } else {
-                    console.log("Administrador");
+                    navigate("admin");
                 }
             }
             action.resetForm(valorInicial);
@@ -61,9 +62,25 @@ const Login = () => {
         onSubmit: handleLogin,
     });
     return (
-        <div style={{ width: "40%", margin: "80px auto", height: "350px" }}>
+        <Paper
+            elevation={3}
+            sx={{
+                width: "80%",
+                height: "600px",
+                padding: "10px",
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Typography variant="h5">
+                <strong>Iniciar Session</strong>
+            </Typography>
             <form
                 style={{
+                    width: "95%",
                     display: "flex",
                     flexDirection: "column",
                     gap: "14px",
@@ -74,7 +91,8 @@ const Login = () => {
                     fullWidth
                     id="email"
                     name="email"
-                    label="Email"
+                    autoComplete="off"
+                    label="Correo"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
@@ -84,7 +102,8 @@ const Login = () => {
                     fullWidth
                     id="password"
                     name="password"
-                    label="Password"
+                    label="Contraseña"
+                    autoComplete="off"
                     type="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
@@ -105,7 +124,7 @@ const Login = () => {
                     Iniciar Session
                 </Button>
             </form>
-        </div>
+        </Paper>
     );
 };
 

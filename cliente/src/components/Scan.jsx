@@ -1,14 +1,42 @@
+import { Paper, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { QrReader } from "react-qr-reader";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 const Scan = () => {
     const myStorage = window.localStorage;
-    const [guarda, setGuarda] = useState(JSON.parse(myStorage.getItem("user")));
+    const navigate = useNavigate();
+    const [guarda, setGuarda] = useState({});
+    const autorizado = (usuario) => {
+        const { permit } = usuario;
+        if (permit !== undefined) {
+            if (permit !== "guarda") {
+                navigate("/");
+            }
+        }
+    };
+    useEffect(() => {
+        setGuarda(JSON.parse(myStorage.getItem("user")));
+    }, []);
+
+    useEffect(() => {
+        autorizado(guarda);
+    }, [guarda]);
     return (
-        <>
+        <Paper
+            elevation={3}
+            sx={{
+                width: "90%",
+                margin: "10px auto",
+                padding: "15px",
+                minHeight: "600px",
+            }}
+        >
+            <Typography variant="h4">Registrar QR</Typography>
             <QrReader
-                delay={600}
+                delay={1200}
                 onResult={(result, error) => {
                     if (!!result) {
                         //setData(result);
@@ -16,14 +44,14 @@ const Scan = () => {
                         console.log(guarda._id);
                         axios
                             .post("http://localhost:8000/api/generar", {
-                                guarda: guarda._id,
+                                guarda: result.text,
                             })
                             .then((res) => {
                                 console.log(res.data);
                                 axios
                                     .post("http://localhost:8000/api/guardar", {
                                         token: res.data,
-                                        lectorId: guarda._id,
+                                        lectorId: result.text,
                                     })
                                     .then((result) => {
                                         console.log(result);
@@ -44,7 +72,7 @@ const Scan = () => {
                 }}
                 style={{ width: "100%" }}
             />
-        </>
+        </Paper>
     );
 };
 
