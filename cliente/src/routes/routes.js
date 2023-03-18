@@ -8,37 +8,36 @@ import Scan from "../components/Scan";
 import AddUser from "../pages/AddUser";
 import Admin from "../pages/Admin";
 
-
 export default createBrowserRouter([
-    {
-        path: "/",
-        element: <Layout />,
-        errorElement: <NotFound />,
-        children: [
-            {
-                index: true,
-                element: <Login />,
-            },
-            {
-                path: "generar",
-                element: <GeneradorQR />,
-            },
-            {
-                path: "scan",
-                element: <Scaner />,
-            },
-            {
-                path: "scaner",
-                element: <Scan />,
-            },
-            {
-                path: "registro",
-                element: <AddUser />,
-            },
-            {
-                path: "admin",
-                element: <Admin />,
-            },
-        ],
-    },
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <Login />,
+      },
+      {
+        path: "generar",
+        element: <GeneradorQR />,
+      },
+      {
+        path: "scan",
+        element: <Scaner />,
+      },
+      {
+        path: "scaner",
+        element: <Scaner />,
+      },
+      {
+        path: "registro",
+        element: <AddUser />,
+      },
+      {
+        path: "admin",
+        element: <Admin />,
+      },
+    ],
+  },
 ]);
