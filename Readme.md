@@ -13,7 +13,7 @@ git clone https://github.com/alex2rive3/ProyectoQr.git
 - Instalar las dependencias del servidor:
 
 ```
-cd ticket-descuentos-electronicos/server
+cd ProyectoQr/server
 npm install
 ```
 
@@ -54,7 +54,7 @@ QRCode: Biblioteca de JavaScript para la generación de códigos QR
 
 ## Autores
 
-Este proyecto fue desarrollado por Alex Rivé y Derlis Cuba como parte de un proyecto final para terminar el Bootcamp de FullStack MERN en la academia CodingDojo. Siéntase libre de utilizarlo y modificarlo según sus necesidades.
+Este proyecto fue desarrollado por Alex Rivé y Derlis Cuba como parte de un proyecto final para terminar el Bootcamp FullStack MERN en la academia CodingDojo. Siéntase libre de utilizarlo y modificarlo según sus necesidades.
 
 ## Contribuciones
 
