@@ -45,12 +45,12 @@ npm start
 
 ## Tecnologías utilizadas
 
-MongoDB: Base de datos NoSQL
-Express.js: Framework de Node.js para la construcción de APIs
-React.js: Biblioteca de JavaScript para la construcción de interfaces de usuario
-Node.js: Entorno de ejecución de JavaScript del lado del servidor
-MaterialUI: Framework de CSS para la construcción de interfaces de usuario
-QRCode: Biblioteca de JavaScript para la generación de códigos QR
+- MongoDB: Base de datos NoSQL
+- Express.js: Framework de Node.js para la construcción de APIs
+- React.js: Biblioteca de JavaScript para la construcción de interfaces de usuario
+- Node.js: Entorno de ejecución de JavaScript del lado del servidor
+- MaterialUI: Framework de CSS para la construcción de interfaces de usuario
+- QRCode: Biblioteca de JavaScript para la generación de códigos QR
 
 ## Autores
 
