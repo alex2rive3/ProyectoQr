@@ -25,32 +25,51 @@ const Scaner = () => {
           delay={600}
           onResult={(result, error) => {
             if (!!result) {
-              //setData(result);
-              console.log(result.text);
-              console.log(guarda._id);
+              //Llamado a la Api para control de Lectura control de lectura
               axios
-                .post("http://localhost:8000/api/generar", {
-                  guarda: guarda._id,
+                .post("http://localhost:8000/api/checkUser", {
+                  user_id: result.text,
                 })
-                .then((res) => {
-                  console.log(res.data);
-                  axios
-                    .post("http://localhost:8000/api/guardar", {
-                      token: res.data,
-                      lectorId: guarda._id,
-                    })
-                    .then((result) => {
-                      console.log(result);
-                      if (result.status === 200) {
-                        Swal.fire({
-                          icon: "success",
-                          title: "GENIAL!!!",
-                          text: `Lectura Correcta del Codigo!`,
-                        });
-                      }
+                .then((pase) => {
+                  console.log(pase);
+                  if (pase.pass === true) {
+                    //llamda a la api para guardar id del Usuario Universitario y el del Transporte(guarda)
+                    axios
+                      .post("http://localhost:8000/api/guardar", {
+                        generadorId: result.text,
+                        lectorId: guarda._id,
+                      })
+                      .then((res) => {
+                        console.log(res.data);
+                        if (res.status === 200) {
+                          Swal.fire({
+                            icon: "success",
+                            title: "GENIAL!!!",
+                            text: `Lectura Correcta del Codigo!`,
+                          });
+                        }
+                      });
+                  } else if (pase.pass === false) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "ERROR!!!",
+                      text: `Este Codigo ya fue Registrado el dia de Hoy !`,
                     });
+                  } else {
+                    Swal.fire({
+                      icon: "error",
+                      title: "ERROR!!!",
+                      text: `El Usuario no esta registrado `,
+                    });
+                  }
                 })
-                .catch((error) => console.log(error.response));
+                .catch((error) => {
+                  Swal.fire({
+                    icon: "error",
+                    title: "ERORR!!!",
+                    text: error.response,
+                  });
+                });
             }
             if (!!error) {
               //console.error(error);

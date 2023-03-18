@@ -55,11 +55,12 @@ module.exports.register = (req, res) => {
     })
     .catch((err) => res.json(err));
 };
-
+//Obtener todos los Usuarios 
 module.exports.getAll = async (req, res) => {
   const getAll = await User.find({});
   res.json(getAll);
 };
+//Eliminar un Usuario
 module.exports.delete = async (req, res) => {
   console.log(req.params.id);
   try {
@@ -69,6 +70,7 @@ module.exports.delete = async (req, res) => {
     res.status(400).json(error);
   }
 };
+//cerrar Session 
 module.exports.logout = (req, res) => {
   try {
     res.clearCookie("userToken");
@@ -78,6 +80,7 @@ module.exports.logout = (req, res) => {
     res.json(error);
   }
 };
+//Iniciar Session 
 module.exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -137,28 +140,6 @@ module.exports.checkUser = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-module.exports.generador = async (req, res) => {
-  const { guarda } = req.body;
-  try {
-    const secret = "boletoDescuentoFram";
-    const newTokenQR = jwt.sign(
-      {
-        id: new Date(),
-        guarda: guarda,
-      },
-      secret
-    );
-    res.json(newTokenQR);
-  } catch (error) {
-    return res.json({ msg: "Ha ocurrido algun error " });
-  }
-};
-module.exports.buscarEmail = async (req, res) => {
-  const { email } = req.body;
-  const result = await User.findOne({ email: email });
-  res.json(result);
 };
 module.exports.getUser = async (req, res) => {
   const { id } = req.body;
