@@ -40,4 +40,8 @@ export default createBrowserRouter([
     path: "data",
     element: <TableList />,
   },
+  {
+    path: "data-admin",
+    element: <TableListAdmin />,
+  },
 ]);

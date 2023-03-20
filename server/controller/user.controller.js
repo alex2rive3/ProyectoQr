@@ -1,6 +1,7 @@
 const { User } = require("../model/user.model");
 const { Black_list } = require("../model/black_list");
 const { White_list } = require("../model/white_list");
+const { Qr } = require("../model/qr.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var cron = require("node-cron");
@@ -141,6 +142,28 @@ module.exports.checkUser = async (req, res) => {
     console.log(error);
   }
 };
+
+module.exports.filterDate = async (req, res) => {
+  const date_from = req.query["startDate"];
+  const date_to = req.query["endDate"];
+
+  let options = {};
+  if (date_from && date_to) {
+    options["createdAt"] = {
+      $gte: new Date(date_from),
+      $lte: new Date(date_to),
+    };
+  }
+
+  // Usa el método find de Mongoose para obtener los documentos que coinciden con las opciones
+  const data = await Qr.find(options)
+    .populate("generadorId", { userName: 1 })
+    .populate("lectorId", { userName: 1 });
+
+  // Envía la respuesta al cliente
+  res.json(data);
+};
+
 module.exports.getUser = async (req, res) => {
   const result = await User.findOne({ _id: req.params.id });
   res.json(result);
