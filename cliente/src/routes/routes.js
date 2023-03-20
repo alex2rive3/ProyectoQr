@@ -6,6 +6,7 @@ import NotFound from "../pages/NotFound";
 import Scaner from "../components/Scaner";
 import Admin from "../pages/Admin";
 import TableList from "../components/TableListLector";
+import UpdateUser from "../pages/UpdateUser";
 
 export default createBrowserRouter([
   {
