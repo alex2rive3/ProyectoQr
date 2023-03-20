@@ -55,7 +55,7 @@ module.exports.register = (req, res) => {
     })
     .catch((err) => res.json(err));
 };
-//Obtener todos los Usuarios 
+//Obtener todos los Usuarios
 module.exports.getAll = async (req, res) => {
   const getAll = await User.find({});
   res.json(getAll);
@@ -70,7 +70,7 @@ module.exports.delete = async (req, res) => {
     res.status(400).json(error);
   }
 };
-//cerrar Session 
+//cerrar Session
 module.exports.logout = (req, res) => {
   try {
     res.clearCookie("userToken");
@@ -80,7 +80,7 @@ module.exports.logout = (req, res) => {
     res.json(error);
   }
 };
-//Iniciar Session 
+//Iniciar Session
 module.exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;

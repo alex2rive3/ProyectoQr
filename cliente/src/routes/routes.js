@@ -5,7 +5,7 @@ import GeneradorQR from "../components/GeneradorQR";
 import NotFound from "../pages/NotFound";
 import Scaner from "../components/Scaner";
 import Admin from "../pages/Admin";
-import UpdateUser from "../pages/UpdateUser";
+import TableList from "../components/TableListLector";
 
 export default createBrowserRouter([
   {
@@ -34,5 +34,9 @@ export default createBrowserRouter([
         element: <UpdateUser />,
       },
     ],
+  },
+  {
+    path: "data",
+    element: <TableList />,
   },
 ]);
