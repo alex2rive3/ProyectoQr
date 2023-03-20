@@ -142,8 +142,12 @@ module.exports.checkUser = async (req, res) => {
   }
 };
 module.exports.getUser = async (req, res) => {
-  const { id } = req.body;
-  const result = await User.findOne({ _id: id });
+  const result = await User.findOne({ _id: req.params.id });
+  res.json(result);
+};
+module.exports.getUserEmail = async (req, res) => {
+  const { email } = req.body;
+  const result = await User.findOne({ email: email });
   res.json(result);
 };
 module.exports.update = async (req, res) => {

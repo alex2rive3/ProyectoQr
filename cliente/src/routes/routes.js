@@ -5,6 +5,7 @@ import GeneradorQR from "../components/GeneradorQR";
 import NotFound from "../pages/NotFound";
 import Scaner from "../components/Scaner";
 import Admin from "../pages/Admin";
+import UpdateUser from "../pages/UpdateUser";
 
 export default createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export default createBrowserRouter([
       {
         path: "admin",
         element: <Admin />,
+      },
+      {
+        path: "user/:id",
+        element: <UpdateUser />,
       },
     ],
   },
