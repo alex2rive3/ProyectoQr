@@ -34,6 +34,34 @@ cron.schedule("*/5 * * * *", async () => {
   }
 });
 
+// Backup del antiguo cron
+// cron.schedule("0 2 * * 1-5", async () => {
+//   try {
+//     // Obtener todos los usuarios
+//     const users = await User.find();
+
+//     // Agregar usuarios con permit "universitario" a la White_list
+//     for (const user of users) {
+//       if (user.permit === "universitario") {
+//         const whiteUser = new White_list({
+//           user_id: user._id,
+//           name: user.userName,
+//         });
+//         await whiteUser.save();
+//         console.log(
+//           `Se ha agregado el usuario ${user.userName} a la White_list`
+//         );
+//       }
+//     }
+
+//     // Vaciar la Black_list
+//     await Black_list.deleteMany({});
+//     console.log("Se ha vaciado la Black_list");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
 //Test para saber si se ejecuta correctamente, en este caso cada 3 segundos
 // cron.schedule("*/3 * * * * *", () => {
 //   console.log("Ejecutando tarea cada 3 segundos");
@@ -56,19 +84,6 @@ module.exports.register = (req, res) => {
     })
     .catch((err) => res.json(err));
 };
-//Modificar un usuario
-module.exports.update = async (req, res) => {
-  try {
-    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.json(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
 //Obtener todos los Usuarios
 module.exports.getAll = async (req, res) => {
   const getAll = await User.find({});
@@ -178,12 +193,18 @@ module.exports.filterDate = async (req, res) => {
 };
 
 module.exports.getUser = async (req, res) => {
-  const result = await User.findOne({ _id: req.params.id });
+  const { id } = req.body;
+  const result = await User.findOne({ _id: id });
   res.json(result);
 };
-module.exports.getUserEmail = async (req, res) => {
-  const { email } = req.body;
-  const result = await User.findOne({ email: email });
-  res.json(result);
+module.exports.update = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.json(user);
+  } catch (error) {
+    res.status(400).json(error);
+  }
 };
-
