@@ -14,3 +14,24 @@ module.exports.getAll = async (req, res) => {
     const result = await Qr.find({}).populate("generadorId", { userName: 1 }).populate("lectorId", { userName: 1 })
     res.json(result)
 }
+
+module.exports.countDiario = (req, res) => {
+    const fechaInicio = new Date(); // fecha de inicio de la consulta
+    const fechaFin = new Date(); // fecha de fin de la consulta
+    //Seteamos las horas para hacer un contador diario
+    fechaInicio.setHours(4, 30, 0, 0); //4:30 del dia
+    fechaFin.setHours(23, 30, 0, 0);    //23:30 del mismo dia 
+
+    Qr.countDocuments({
+        createdAt: {
+            $gte: new Date(fechaInicio),
+            $lte: new Date(fechaFin)
+        }
+    }, (error, count) => {
+        if (error) {
+            res.json(error);
+        } else {
+            res.json(count);
+        }
+    });
+}
