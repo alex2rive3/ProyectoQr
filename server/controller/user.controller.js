@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 var cron = require("node-cron");
 
 //
-cron.schedule("0 2 * * 1-5", async () => {
+cron.schedule("*/5 * * * *", async () => {
   try {
     // Obtener todos los usuarios
     const users = await User.find();
