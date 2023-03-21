@@ -56,6 +56,19 @@ module.exports.register = (req, res) => {
     })
     .catch((err) => res.json(err));
 };
+//Modificar un usuario
+module.exports.update = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.json(user);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 //Obtener todos los Usuarios
 module.exports.getAll = async (req, res) => {
   const getAll = await User.find({});
@@ -173,14 +186,4 @@ module.exports.getUserEmail = async (req, res) => {
   const result = await User.findOne({ email: email });
   res.json(result);
 };
-module.exports.update = async (req, res) => {
-  try {
-    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.json(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
+

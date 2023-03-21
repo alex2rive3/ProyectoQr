@@ -5,7 +5,8 @@ import GeneradorQR from "../components/GeneradorQR";
 import NotFound from "../pages/NotFound";
 import Scaner from "../components/Scaner";
 import Admin from "../pages/Admin";
-import TableList from "../components/TableListLector";
+import TableListLector from "../components/TableListLector";
+import TableListAdmin from "../components/TableListAdmin";
 import UpdateUser from "../pages/UpdateUser";
 
 export default createBrowserRouter([
@@ -38,7 +39,7 @@ export default createBrowserRouter([
   },
   {
     path: "data",
-    element: <TableList />,
+    element: <TableListLector />,
   },
   {
     path: "data-admin",

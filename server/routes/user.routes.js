@@ -14,6 +14,7 @@ module.exports = (app) => {
 
     //Rutas para control de QR
     app.get("/api/qr", Qr.getAll);
+    app.get("/api/countDiario", Qr.countDiario);
     app.post("/api/guardar", authenticate, Qr.guardar);
 
     //Rutas creada por Derlis

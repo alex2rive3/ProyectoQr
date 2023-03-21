@@ -15,17 +15,17 @@ const UpdateUser = () => {
 
   const [user, setUser] = useState(valorInicial);
   const { id } = useParams();
-  const autorizado = (usuario) => {
-    const { permit } = usuario;
-    if (permit !== undefined) {
-      if (permit !== "administrador") {
-        navigate("/");
-      }
-    }
-  };
-  useEffect(() => {
-    autorizado(user);
-  }, [user]);
+  // const autorizado = (usuario) => {
+  //   const { permit } = usuario;
+  //   if (permit !== undefined) {
+  //     if (permit !== "administrador") {
+  //       navigate("/");
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   autorizado(user);
+  // }, [user]);
 
   useEffect(() => {
     const getData = async () => {

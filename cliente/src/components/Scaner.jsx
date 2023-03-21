@@ -1,12 +1,29 @@
 import axios from "axios";
-import { Paper, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Alert, Paper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { QrReader } from "react-qr-reader";
 import Swal from "sweetalert2";
 import MenuBar from "../layouts/Menu";
 const Scaner = () => {
   const myStorage = window.localStorage;
   const [guarda, setGuarda] = useState(JSON.parse(myStorage.getItem("user")));
+  const [count, setCount] = useState(0);
+  const [actualizarCount, setActualizarCount] = useState("");
+  const getCount = async () => {
+    const today = new Date();
+    const lastWeek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - 7
+    );
+
+    const response = await axios.get(`http://localhost:8000/api/countDiario`);
+    setCount(response.data);
+  };
+  useEffect(() => {
+    getCount();
+  }, [actualizarCount]);
+
   return (
     <>
       <Paper
@@ -21,6 +38,9 @@ const Scaner = () => {
         <Typography variant="h4" sx={{ textAlign: "center" }}>
           Registrar QR
         </Typography>
+        <Alert severity="success">
+          <strong>{count} Registrados el dia de hoy</strong>
+        </Alert>
         <QrReader
           delay={600}
           onResult={(result, error) => {
@@ -32,7 +52,8 @@ const Scaner = () => {
                 })
                 .then((pase) => {
                   console.log(pase);
-                  if (pase.pass === true) {
+                  const bandera = true;
+                  if (bandera === true) {
                     //llamda a la api para guardar id del Usuario Universitario y el del Transporte(guarda)
                     axios
                       .post("http://localhost:8000/api/guardar", {
@@ -42,6 +63,7 @@ const Scaner = () => {
                       .then((res) => {
                         console.log(res.data);
                         if (res.status === 200) {
+                          setActualizarCount(res.data._id);
                           Swal.fire({
                             icon: "success",
                             title: "GENIAL!!!",

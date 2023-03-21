@@ -2,12 +2,14 @@ import { Box, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AddUser from "./AddUser";
 import UserList from "../components/UserList";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import MenuBar from "../layouts/Menu";
 import { useNavigate } from "react-router-dom";
+import TableListAdmin from "../components/TableListAdmin";
 const Admin = () => {
   const myStorage = window.localStorage;
   const navigate = useNavigate();
+  const [showList, setShowList] = useState(true);
   const [actualizar, setActualizar] = useState();
   const [user, setUser] = useState({});
   const autorizado = (usuario) => {
@@ -57,12 +59,23 @@ const Admin = () => {
           </Box>
           <Box
             flex="3"
+            flexDirection="column"
             display="flex"
             justifyContent="center"
             alignItems="center"
             alignContent="center"
           >
-            <UserList act={actualizar} />
+            {/* mostrar lista de usuarios o listado de qr */}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                setShowList(!showList);
+              }}
+            >
+              {showList ? "Mostrar Lista de Qr" : "Mostrar Lista de Usuarios"}
+            </Button>
+            {showList ? <UserList act={actualizar} /> : <TableListAdmin />}
           </Box>
         </Box>
       </Box>
