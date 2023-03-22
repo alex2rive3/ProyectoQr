@@ -34,7 +34,7 @@ const UpdateUser = () => {
     };
 
     getData();
-  }, [id]);
+  }, []);
 
   const actualizarUsuario = async (values, actions) => {
     try {

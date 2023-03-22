@@ -51,9 +51,9 @@ const Scaner = () => {
                   user_id: result.text,
                 })
                 .then((pase) => {
-                  console.log(pase);
-                  const bandera = true;
-                  if (bandera === true) {
+                  console.log(pase.data.pass);
+                  if (pase.data.pass === true) {
+                    console.log("Pase true");
                     //llamda a la api para guardar id del Usuario Universitario y el del Transporte(guarda)
                     axios
                       .post("http://localhost:8000/api/guardar", {
@@ -71,7 +71,7 @@ const Scaner = () => {
                           });
                         }
                       });
-                  } else if (pase.pass === false) {
+                  } else if (pase.data.pass === false) {
                     Swal.fire({
                       icon: "error",
                       title: "ERROR!!!",

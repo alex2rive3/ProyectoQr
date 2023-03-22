@@ -47,6 +47,15 @@ UserSchema.pre('save', function (next) {
             next();
         });
 });
+//encriptar la contraseña al modif
+UserSchema.pre('findOneAndUpdate', function (next) {
+    console.log("actualizar :", this._update.password)
+    bcrypt.hash(this._update.password, 10)
+        .then(hash => {
+            this._update.password = hash;
+            next();
+        });
+});
 
 module.exports.User = mongoose.model('user', UserSchema);
 
