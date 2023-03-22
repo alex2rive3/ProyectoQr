@@ -10,13 +10,6 @@ const Scaner = () => {
   const [count, setCount] = useState(0);
   const [actualizarCount, setActualizarCount] = useState("");
   const getCount = async () => {
-    const today = new Date();
-    const lastWeek = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - 7
-    );
-
     const response = await axios.get(`http://localhost:8000/api/countDiario`);
     setCount(response.data);
   };
@@ -29,6 +22,7 @@ const Scaner = () => {
       <Paper
         elevation={3}
         sx={{
+          margin: "0 auto",
           width: "90%",
           padding: "15px",
           minHeight: "600px",
@@ -42,7 +36,7 @@ const Scaner = () => {
           <strong>{count} Registrados el dia de hoy</strong>
         </Alert>
         <QrReader
-          delay={600}
+          delay={1200}
           onResult={(result, error) => {
             if (!!result) {
               //Llamado a la Api para control de Lectura control de lectura

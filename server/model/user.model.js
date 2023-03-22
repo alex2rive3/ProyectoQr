@@ -49,11 +49,19 @@ UserSchema.pre('save', function (next) {
 });
 //encriptar la contraseña al modif
 UserSchema.pre('findOneAndUpdate', function (next) {
-    console.log("actualizar :", this._update.password)
+    // Verificar si la contraseña ha sido modificada
+    if (!this._update.password) {
+        return next();
+    }
+
+    // Hashear la nueva contraseña
     bcrypt.hash(this._update.password, 10)
         .then(hash => {
             this._update.password = hash;
             next();
+        })
+        .catch(error => {
+            next(error);
         });
 });
 

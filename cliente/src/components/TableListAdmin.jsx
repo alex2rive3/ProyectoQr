@@ -7,7 +7,7 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 const columns = [
   {
     field: "generadorId",
-    headerName: "Alumno",
+    headerName: "Universitario",
     width: 200,
     valueGetter: (params) => params.value.userName,
   },
@@ -53,6 +53,18 @@ const TableListAdmin = () => {
     );
     setData(response.data);
   };
+
+  const DayFilter = async () => {
+    const fechaInicio = new Date(); // fecha de inicio de la consulta
+    const fechaFin = new Date(); // fecha de fin de la consulta
+    //Seteamos las horas para hacer un contador diario
+    fechaInicio.setHours(4, 30, 0, 0); //4:30 del dia
+    fechaFin.setHours(23, 30, 0, 0); //23:30 del mismo dia
+    const response = await axios.get(
+      `http://localhost:8000/api/filter?startDate=${fechaInicio.toISOString()}&endDate=${fechaFin.toISOString()}`
+    );
+    setData(response.data);
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -61,15 +73,35 @@ const TableListAdmin = () => {
     <Paper sx={{ minWidth: 720, padding: "10px 18px" }}>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h5">Lista de Qr</Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={(e) => {
-            MonthFilter();
-          }}
-        >
-          Listado del Mes
-        </Button>
+        <Box display="flex" alignItems="center" gap="5px">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              MonthFilter();
+            }}
+          >
+            Listado del Mes
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              getData();
+            }}
+          >
+            Listado de la Semana
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              DayFilter();
+            }}
+          >
+            Listado del Día
+          </Button>
+        </Box>
       </Box>
       <div>
         <DataGrid
