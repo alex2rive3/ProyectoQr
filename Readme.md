@@ -1,6 +1,12 @@
-# Ticket de Descuentos Electrónicos con Código QR
+# 🚌 QR para descuentos en tickets 🚌
 
-Este es un proyecto de aplicación web para generar y gestionar tickets de descuentos electrónicos utilizando códigos QR. La aplicación utiliza el stack MERN (MongoDB, Express.js, React.js, Node.js) para su desarrollo.
+Nuestro proyecto permite generar un código QR en el móvil que se escanea al subir al bus con un validador , y que tiene medidas de seguridad implementadas, como por ejemplo que solo se puedan usar una vez al día. De esta manera, se simplifica el proceso de otorgar el descuento de bus a los estudiantes universitarios, que actualmente requiere de tickets físicos, validaciones y trámites burocráticos. Así, se ahorra tiempo, dinero y se cuida el medio ambiente.
+
+## Con este proyecto buscamos:
+
+- 🌳 Reducir el uso de papel y contribuir a la sostenibilidad ambiental. 🌳
+- ⚡ Agilizar los procesos logísticos y optimizar los recursos disponibles. ⚡
+- 💻 Impulsar la digitalización en el sector del transporte público y adaptarse a las nuevas tendencias tecnológicas. 💻
 
 ## Instalación
 
