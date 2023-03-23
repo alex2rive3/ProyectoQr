@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import FormUser from "../components/FormUser";
+import { Paper, Typography } from "@mui/material";
 
 const UpdateUser = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const UpdateUser = () => {
     };
 
     getData();
-  }, [id]);
+  }, []);
 
   const actualizarUsuario = async (values, actions) => {
     try {
@@ -63,14 +64,22 @@ const UpdateUser = () => {
   };
 
   return (
-    <>
-      <h1>Editar Usuario</h1>
+    <Paper
+      elevation={3}
+      sx={{ maxWidth: "45%", padding: "10px 18px", margin: "0 auto" }}
+    >
+      <Typography
+        variant="h5"
+        sx={{ textAlign: "center", marginBottom: "8px" }}
+      >
+        Editar Usuario
+      </Typography>
       <FormUser
         initialValues={user}
         botonTexto="Actualizar"
         onSubmit={actualizarUsuario}
       />
-    </>
+    </Paper>
   );
 };
 
